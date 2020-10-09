@@ -40,6 +40,16 @@ class ViewController: UIViewController {
         }
     }
     
+    func reset() {
+        P1Card1.image = UIImage(named: "blue_back")
+        P1Card2.image = UIImage(named: "blue_back")
+        P1Card3.image = UIImage(named: "blue_back")
+        P2Card1.image = UIImage(named: "blue_back")
+        P2Card2.image = UIImage(named: "blue_back")
+        P2Card3.image = UIImage(named: "blue_back")
+        labelWinner.text = "No Winner"
+    }
+    
     @IBAction func drawCards(_ sender: UIButton) {
         numbers.shuffle()
         card1 = numbers[0]
@@ -59,12 +69,35 @@ class ViewController: UIViewController {
     
     func updateWinner() {
         if card1 == 3 || card2 == 3 || card3 == 3 {
-            labelWinner.text = "Wineer is Player 1"
+            labelWinner.text = "Winner is Player 1"
+            playAgain()
         } else if card4 == 3 || card5 == 3 || card6 == 3 {
-            labelWinner.text = "Wineer is Player 2"
+            labelWinner.text = "Winner is Player 2"
+            playAgain()
         } else {
             labelWinner.text = "No Winner"
         }
+    }
+    
+    func playAgain() {
+        let alertController = UIAlertController(
+            title: "Play Again",
+            message: "Do you want to play again？",
+            preferredStyle: .alert)
+        let cancelAction = UIAlertAction(
+            title: "No",
+            style: .cancel,
+            handler: nil)
+        alertController.addAction(cancelAction)
+        let okAction = UIAlertAction(
+            title: "Yes",
+            style: .default,
+            handler: {_ in self.reset()})
+        alertController.addAction(okAction)
+        self.present(
+            alertController,
+            animated: true,
+            completion: nil)
     }
 }
 
